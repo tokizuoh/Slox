@@ -2,6 +2,8 @@ import Foundation
 
 @main
 final class Lox {
+    static var hadError = false
+
     static func main() {
         let arguments = CommandLine.arguments
         if arguments.count > 2 {
@@ -20,6 +22,9 @@ final class Lox {
         }
 
         run(source: content)
+        if hadError {
+            exit(65)
+        }
     }
 
     private static func runPrompt() {
@@ -31,11 +36,21 @@ final class Lox {
             }
 
             run(source: line)
+            hadError = false
         }
     }
 
     private static func run(source: String) {
         // TODO
         print(source)
+    }
+
+    static func error(line: Int, message: String) {
+        report(line: line, file: "", message: message)
+    }
+
+    private static func report(line: Int, file: String, message: String) {
+        print("[line: \(line)] Error \(file): \(message)")
+        hadError = true
     }
 }
