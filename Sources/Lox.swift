@@ -13,15 +13,15 @@ final class Lox {
             runPrompt()
         }
     }
-    
+
     private static func runFile(path: String) {
         guard let content = try? String(contentsOfFile: path) else {
             exit(64)
         }
-        
+
         run(source: content)
     }
-    
+
     private static func runPrompt() {
         while true {
             print("> ", terminator: "")
@@ -29,11 +29,11 @@ final class Lox {
             guard let line, !line.isEmpty else {
                 break
             }
-            
+
             run(source: line)
         }
     }
-    
+
     private static func run(source: String) {
         // TODO
         print(source)
