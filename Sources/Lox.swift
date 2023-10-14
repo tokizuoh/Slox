@@ -10,7 +10,7 @@ final class Lox {
         } else if arguments.count == 2 {
             runFile(path: arguments[1])
         } else {
-            // TODO
+            runPrompt()
         }
     }
     
@@ -19,5 +19,15 @@ final class Lox {
             exit(64)
         }
         // TODO
+    }
+    
+    static func runPrompt() {
+        while true {
+            print("> ", terminator: "")
+            let line = readLine()
+            guard let line, !line.isEmpty else {
+                break
+            }
+        }
     }
 }
