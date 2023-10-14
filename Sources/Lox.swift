@@ -18,7 +18,8 @@ final class Lox {
         guard let content = try? String(contentsOfFile: path) else {
             exit(64)
         }
-        // TODO
+        
+        run(source: content)
     }
     
     static func runPrompt() {
@@ -28,6 +29,13 @@ final class Lox {
             guard let line, !line.isEmpty else {
                 break
             }
+            
+            run(source: line)
         }
+    }
+    
+    static func run(source: String) {
+        // TODO
+        print(source)
     }
 }
