@@ -14,7 +14,7 @@ final class Lox {
         }
     }
     
-    static func runFile(path: String) {
+    private static func runFile(path: String) {
         guard let content = try? String(contentsOfFile: path) else {
             exit(64)
         }
@@ -22,7 +22,7 @@ final class Lox {
         run(source: content)
     }
     
-    static func runPrompt() {
+    private static func runPrompt() {
         while true {
             print("> ", terminator: "")
             let line = readLine()
@@ -34,7 +34,7 @@ final class Lox {
         }
     }
     
-    static func run(source: String) {
+    private static func run(source: String) {
         // TODO
         print(source)
     }
