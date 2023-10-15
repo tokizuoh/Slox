@@ -61,11 +61,34 @@ final class Scanner {
             break
         case "\n":
             line += 1
+        case "\"":
+            string()
         default:
             Lox.error(line: line, message: "Unexpected character.")
             return
         }
+    }
 
+    private func string() {
+        while peek() != "\"" && !isAtEnd {
+            if peek() == "\n" {
+                line += 1
+            }
+            advance()
+        }
+
+        if isAtEnd {
+            Lox.error(line: line, message: "Unterminated string.")
+            return
+        }
+
+        // consume terminal "\""
+        advance()
+
+        let startIndex = source.startIndex
+        let currentIndex = source.index(startIndex, offsetBy: current)
+        let value = String(source[startIndex..<currentIndex])
+        addToken(type: .string, literal: value)
     }
 
     @discardableResult
