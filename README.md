@@ -3,7 +3,7 @@ Interpreter of Lox written by Swift.
 
 ## What is "Lox"?
 
-https://craftinginterpreters.com/the-lox-language.html
+See: https://craftinginterpreters.com/the-lox-language.html
 
 ## Dependency
 
