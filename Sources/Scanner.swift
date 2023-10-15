@@ -23,7 +23,7 @@ final class Scanner {
         }
 
         tokens.append(
-            Token(type: .eof, lexeme: "", literal: "", line: line)
+            Token(type: .eof, lexeme: "", literal: nil, line: line)
         )
 
         return tokens
@@ -107,7 +107,7 @@ final class Scanner {
         let currentIndex = source.index(source.startIndex, offsetBy: current)
         let text = String(source[startIndex..<currentIndex])
         tokens.append(
-            Token(type: type, lexeme: text, literal: literal, line: line)
+            Token(type: type, lexeme: text, literal: .string(text: text), line: line)
         )
     }
 
