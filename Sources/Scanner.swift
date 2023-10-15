@@ -86,6 +86,7 @@ final class Scanner {
             }
         }
 
+        // TODO: まとめる
         let startIndex = source.index(source.startIndex, offsetBy: start)
         let currentIndex = source.index(source.startIndex, offsetBy: current)
         let value = String(source[startIndex..<currentIndex])
