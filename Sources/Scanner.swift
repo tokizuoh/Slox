@@ -85,8 +85,9 @@ final class Scanner {
         // consume terminal "\""
         advance()
 
-        let startIndex = source.startIndex
-        let currentIndex = source.index(startIndex, offsetBy: current)
+        // discard left-and-right "\""
+        let startIndex = source.index(source.startIndex, offsetBy: start + 1)
+        let currentIndex = source.index(source.startIndex, offsetBy: current - 1)
         let value = String(source[startIndex..<currentIndex])
         addToken(type: .string, literal: value)
     }
