@@ -1,9 +1,9 @@
 run:
-	swiftlint --fix
 	swiftc -parse-as-library Sources/Lox.swift && ./Lox
+	swiftlint --fix --quiet
 
 run-with-args:
-	swiftlint --fix
 	swiftc -parse-as-library Sources/Lox.swift && ./Lox "${ARG}"
+	swiftlint --fix --quiet
 
 .PHONY: run, run-with-args
