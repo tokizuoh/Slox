@@ -31,7 +31,6 @@ final class Scanner {
 
     private func scanToken() {
         guard let value = advance() else {
-            Lox.error(line: line, message: "TODO")
             return
         }
 
