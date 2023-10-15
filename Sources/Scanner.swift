@@ -82,7 +82,7 @@ final class Scanner {
             return
         }
 
-        // consume terminal "\""
+        // consume right "\""
         advance()
 
         // discard left-and-right "\""
