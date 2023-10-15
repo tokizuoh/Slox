@@ -19,7 +19,7 @@ final class Scanner {
     func scanTokens() -> [Token] {
         while !isAtEnd {
             start = current
-            scanTokens()
+            scanToken()
         }
 
         tokens.append(
@@ -71,13 +71,9 @@ final class Scanner {
 
     @discardableResult
     private func advance() -> String? {
-        if current + 1 < sourceCount {
-            current += 1
-            let index = source.index(source.startIndex, offsetBy: current)
-            return String(source[index])
-        } else {
-            return nil
-        }
+        let index = source.index(source.startIndex, offsetBy: current)
+        current += 1
+        return String(source[index])
     }
 
     private func addToken(type: TokenType) {
@@ -87,8 +83,7 @@ final class Scanner {
     private func addToken(type: TokenType, literal: String) {
         let startIndex = source.index(source.startIndex, offsetBy: start)
         let currentIndex = source.index(source.startIndex, offsetBy: current)
-
-        let text = String(source[startIndex...currentIndex])
+        let text = String(source[startIndex..<currentIndex])
         tokens.append(
             Token(type: type, lexeme: text, literal: literal, line: line)
         )
