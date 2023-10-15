@@ -13,6 +13,7 @@ enum TokenType {
 
     case bang
     case bangEqual
+    case equal
     case equalEqual
     case greater
     case greaterEqual
