@@ -64,9 +64,32 @@ final class Scanner {
         case "\"":
             string()
         default:
-            Lox.error(line: line, message: "Unexpected character.")
-            return
+            if Int(value) != nil {
+                number()
+            } else {
+                Lox.error(line: line, message: "Unexpected character.")
+                return
+            }
         }
+    }
+
+    private func number() {
+        while Int(peek()) != nil {
+            advance()
+        }
+
+        if peek() == "." && Int(peekNext()) != nil {
+            advance()
+
+            while Int(peek()) != nil {
+                advance()
+            }
+        }
+
+        let startIndex = source.index(source.startIndex, offsetBy: start)
+        let currentIndex = source.index(source.startIndex, offsetBy: current)
+        let value = String(source[startIndex..<currentIndex])
+        addToken(type: .number, literal: .number(value: Double(value)!))
     }
 
     private func string() {
@@ -88,8 +111,8 @@ final class Scanner {
         // discard left-and-right "\""
         let startIndex = source.index(source.startIndex, offsetBy: start + 1)
         let currentIndex = source.index(source.startIndex, offsetBy: current - 1)
-        let value = String(source[startIndex..<currentIndex])
-        addToken(type: .string, literal: value)
+        let text = String(source[startIndex..<currentIndex])
+        addToken(type: .string, literal: .string(text: text))
     }
 
     @discardableResult
@@ -100,15 +123,15 @@ final class Scanner {
     }
 
     private func addToken(type: TokenType) {
-        addToken(type: type, literal: "")
+        addToken(type: type, literal: nil)
     }
 
-    private func addToken(type: TokenType, literal: String) {
+    private func addToken(type: TokenType, literal: Literal?) {
         let startIndex = source.index(source.startIndex, offsetBy: start)
         let currentIndex = source.index(source.startIndex, offsetBy: current)
         let text = String(source[startIndex..<currentIndex])
         tokens.append(
-            Token(type: type, lexeme: text, literal: .string(text: text), line: line)
+            Token(type: type, lexeme: text, literal: literal, line: line)
         )
     }
 
@@ -133,5 +156,14 @@ final class Scanner {
 
         let currentIndex = source.index(source.startIndex, offsetBy: current)
         return String(source[currentIndex...currentIndex])
+    }
+
+    private func peekNext() -> String {
+        if current + 1 >= sourceCount {
+            return "\0"
+        }
+
+        let nextIndex = source.index(source.startIndex, offsetBy: current + 1)
+        return String(source[nextIndex...nextIndex])
     }
 }
