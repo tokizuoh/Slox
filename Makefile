@@ -1,9 +1,12 @@
-run:
+swiftlint:
 	swiftlint --fix --quiet
-	swiftc -parse-as-library Sources/*.swift && ./main
 
-run-with-args:
-	swiftlint --fix --quiet
-	swiftc -parse-as-library Sources/*.swift && ./main "${ARG}"
+run: swiftlint
+	swiftc -parse-as-library Sources/*.swift
+	./main
 
-.PHONY: run, run-with-args
+run-with-args: swiftlint
+	swiftc -parse-as-library Sources/*.swift
+	./main "${ARG}"
+
+.PHONY: swiftlint, run, run-with-args
