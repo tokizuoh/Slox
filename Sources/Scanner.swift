@@ -36,7 +36,7 @@ final class Scanner {
 
         switch value {
         case "(": addToken(type: .leftParenthesis)
-        case ")": addToken(type: .RightParenthesis)
+        case ")": addToken(type: .rightParenthesis)
         case "{": addToken(type: .leftBrace)
         case "}": addToken(type: .rightBrace)
         case ",": addToken(type: .comma)

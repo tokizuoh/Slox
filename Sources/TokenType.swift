@@ -1,6 +1,6 @@
 enum TokenType {
     case leftParenthesis
-    case RightParenthesis
+    case rightParenthesis
     case leftBrace
     case rightBrace
     case comma
