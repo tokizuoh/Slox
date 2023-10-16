@@ -73,44 +73,6 @@ final class Scanner {
         }
     }
 
-    private func number() {
-        while Int(peek()) != nil {
-            advance()
-        }
-
-        if peek() == "." && Int(peekNext()) != nil {
-            advance()
-
-            while Int(peek()) != nil {
-                advance()
-            }
-        }
-
-        let value = source.substring(from: start, to: current)
-        addToken(type: .number, literal: .number(value: Double(value)!))
-    }
-
-    private func string() {
-        while peek() != "\"" && !isAtEnd {
-            if peek() == "\n" {
-                line += 1
-            }
-            advance()
-        }
-
-        if isAtEnd {
-            Lox.error(line: line, message: "Unterminated string.")
-            return
-        }
-
-        // consume right "\""
-        advance()
-
-        // discard left-and-right "\""
-        let text = source.substring(from: start + 1, to: current - 1)
-        addToken(type: .string, literal: .string(text: text))
-    }
-
     @discardableResult
     private func advance() -> String? {
         let index = source.index(source.startIndex, offsetBy: current)
@@ -157,4 +119,46 @@ final class Scanner {
 
         return source.substring(from: current + 1, to: current + 2)
     }
+}
+
+// MARK: - Scan literal
+extension Scanner {
+    private func string() {
+        while peek() != "\"" && !isAtEnd {
+            if peek() == "\n" {
+                line += 1
+            }
+            advance()
+        }
+
+        if isAtEnd {
+            Lox.error(line: line, message: "Unterminated string.")
+            return
+        }
+
+        // consume right "\""
+        advance()
+
+        // discard left-and-right "\""
+        let text = source.substring(from: start + 1, to: current - 1)
+        addToken(type: .string, literal: .string(text: text))
+    }
+
+    private func number() {
+        while Int(peek()) != nil {
+            advance()
+        }
+
+        if peek() == "." && Int(peekNext()) != nil {
+            advance()
+
+            while Int(peek()) != nil {
+                advance()
+            }
+        }
+
+        let value = source.substring(from: start, to: current)
+        addToken(type: .number, literal: .number(value: Double(value)!))
+    }
+
 }
