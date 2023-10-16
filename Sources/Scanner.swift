@@ -80,17 +80,6 @@ final class Scanner {
         return String(source[index])
     }
 
-    private func addToken(type: TokenType) {
-        addToken(type: type, literal: nil)
-    }
-
-    private func addToken(type: TokenType, literal: Literal?) {
-        let text = source.substring(from: start, to: current)
-        tokens.append(
-            Token(type: type, lexeme: text, literal: literal, line: line)
-        )
-    }
-
     private func match(expected: String) -> Bool {
         if isAtEnd {
             return false
@@ -118,6 +107,20 @@ final class Scanner {
         }
 
         return source.substring(from: current + 1, to: current + 2)
+    }
+}
+
+// MARK: - Add token
+extension Scanner {
+    private func addToken(type: TokenType) {
+        addToken(type: type, literal: nil)
+    }
+
+    private func addToken(type: TokenType, literal: Literal?) {
+        let text = source.substring(from: start, to: current)
+        tokens.append(
+            Token(type: type, lexeme: text, literal: literal, line: line)
+        )
     }
 }
 
