@@ -86,10 +86,7 @@ final class Scanner {
             }
         }
 
-        // TODO: まとめる
-        let startIndex = source.index(source.startIndex, offsetBy: start)
-        let currentIndex = source.index(source.startIndex, offsetBy: current)
-        let value = String(source[startIndex..<currentIndex])
+        let value = source.substring(from: start, to: current)
         addToken(type: .number, literal: .number(value: Double(value)!))
     }
 
@@ -110,9 +107,7 @@ final class Scanner {
         advance()
 
         // discard left-and-right "\""
-        let startIndex = source.index(source.startIndex, offsetBy: start + 1)
-        let currentIndex = source.index(source.startIndex, offsetBy: current - 1)
-        let text = String(source[startIndex..<currentIndex])
+        let text = source.substring(from: start + 1, to: current - 1)
         addToken(type: .string, literal: .string(text: text))
     }
 
@@ -128,9 +123,7 @@ final class Scanner {
     }
 
     private func addToken(type: TokenType, literal: Literal?) {
-        let startIndex = source.index(source.startIndex, offsetBy: start)
-        let currentIndex = source.index(source.startIndex, offsetBy: current)
-        let text = String(source[startIndex..<currentIndex])
+        let text = source.substring(from: start, to: current)
         tokens.append(
             Token(type: type, lexeme: text, literal: literal, line: line)
         )
@@ -141,8 +134,7 @@ final class Scanner {
             return false
         }
 
-        let currentIndex = source.index(source.startIndex, offsetBy: current)
-        if String(source[currentIndex...currentIndex]) != expected {
+        if source.substring(from: current, to: current + 1) != expected {
             return false
         }
 
@@ -155,8 +147,7 @@ final class Scanner {
             return "\0"
         }
 
-        let currentIndex = source.index(source.startIndex, offsetBy: current)
-        return String(source[currentIndex...currentIndex])
+        return source.substring(from: current, to: current + 1)
     }
 
     private func peekNext() -> String {
@@ -164,7 +155,6 @@ final class Scanner {
             return "\0"
         }
 
-        let nextIndex = source.index(source.startIndex, offsetBy: current + 1)
-        return String(source[nextIndex...nextIndex])
+        return source.substring(from: current + 1, to: current + 2)
     }
 }
