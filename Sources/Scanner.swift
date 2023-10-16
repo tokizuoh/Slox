@@ -163,5 +163,4 @@ extension Scanner {
         let value = source.substring(from: start, to: current)
         addToken(type: .number, literal: .number(value: Double(value)!))
     }
-
 }
