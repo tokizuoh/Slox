@@ -46,4 +46,11 @@ final class ScannerTests: XCTestCase {
             XCTAssertEqual(tokens[1].type, .eof)
         }
     }
+
+    func testScanComment() throws {
+        let scanner = Scanner(source: "//")
+        let tokens = scanner.scanTokens()
+        XCTAssertEqual(tokens.count, 1)
+        XCTAssertEqual(tokens[0].type, .eof)
+    }
 }
