@@ -85,7 +85,7 @@ final class Scanner {
         default:
             if Int(value) != nil {
                 number()
-            } else if isAlphabet(c: Character(value)) {
+            } else if isAlphabet(value) {
                 identifier()
             } else {
                 Lox.error(line: line, message: "Unexpected character.")
@@ -94,8 +94,9 @@ final class Scanner {
         }
     }
 
-    private func isAlphabet(c: Character) -> Bool {
-       (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c == "_"
+    private func isAlphabet(_ text: String) -> Bool {
+        let c = Character(text)
+        return (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c == "_"
     }
 
     // TODO: current + 1する前に先読みできるかを判断する
@@ -192,7 +193,7 @@ extension Scanner {
 
     private func identifier() {
         let next = peek()
-        while isAlphabet(c: Character(next)) || Int(next) != nil {
+        while isAlphabet(next) || Int(next) != nil {
             if isAtEnd {
                 break
             }
