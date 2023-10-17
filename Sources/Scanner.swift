@@ -83,7 +83,7 @@ final class Scanner {
         case "\"":
             string()
         default:
-            if Int(value) != nil {
+            if isDigit(value) {
                 number()
             } else if isAlphabet(value) {
                 identifier()
@@ -92,6 +92,10 @@ final class Scanner {
                 return
             }
         }
+    }
+
+    private func isDigit(_ text: String) -> Bool {
+        return Int(text) != nil
     }
 
     private func isAlphabet(_ text: String) -> Bool {
@@ -175,14 +179,14 @@ extension Scanner {
     }
 
     private func number() {
-        while Int(peek()) != nil {
+        while isDigit(peek()) {
             advance()
         }
 
-        if peek() == "." && Int(peekNext()) != nil {
+        if peek() == "." && isDigit(peekNext()) {
             advance()
 
-            while Int(peek()) != nil {
+            while isDigit(peek()) {
                 advance()
             }
         }
@@ -193,7 +197,7 @@ extension Scanner {
 
     private func identifier() {
         let next = peek()
-        while isAlphabet(next) || Int(next) != nil {
+        while isAlphabet(next) || isDigit(next) {
             if isAtEnd {
                 break
             }
