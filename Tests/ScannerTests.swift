@@ -53,4 +53,46 @@ final class ScannerTests: XCTestCase {
         XCTAssertEqual(tokens.count, 1)
         XCTAssertEqual(tokens[0].type, .eof)
     }
+
+    func testScanIdentifier() throws {
+        let scanner = Scanner(source: "hoge")
+        let tokens = scanner.scanTokens()
+        XCTAssertEqual(tokens.count, 2)
+        XCTAssertEqual(tokens[0].type, .identifier)
+        XCTAssertEqual(tokens[0].lexeme, "hoge")
+        XCTAssertNil(tokens[0].literal)
+
+        XCTAssertEqual(tokens[1].type, .eof)
+    }
+
+    func testScanKeyword() throws {
+        let testCases: [TestCase] = [
+            .init("and", .and),
+            .init("class", .class),
+            .init("else", .else),
+            .init("false", .false),
+            .init("for", .for),
+            .init("if", .if),
+            .init("nil", .nil),
+            .init("or", .or),
+            .init("print", .print),
+            .init("return", .return),
+            .init("super", .super),
+            .init("this", .this),
+            .init("true", .true),
+            .init("var", .var),
+            .init("while", .while)
+        ]
+
+        for testCase in testCases {
+            let scanner = Scanner(source: testCase.source)
+            let tokens = scanner.scanTokens()
+            XCTAssertEqual(tokens.count, 2)
+            XCTAssertEqual(tokens[0].type, testCase.tokenType)
+            XCTAssertEqual(tokens[0].lexeme, testCase.source)
+            XCTAssertNil(tokens[0].literal)
+
+            XCTAssertEqual(tokens[1].type, .eof)
+        }
+    }
 }

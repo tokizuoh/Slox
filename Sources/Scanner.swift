@@ -7,6 +7,25 @@ final class Scanner {
 
     private let sourceCount: Int
 
+    private let keywords: [String: TokenType] = [
+        "and": .and,
+        "class": .class,
+        "else": .else,
+        "false": .false,
+        "for": .for,
+        "fun": .fun,
+        "if": .if,
+        "nil": .nil,
+        "or": .or,
+        "print": .print,
+        "return": .return,
+        "super": .super,
+        "this": .this,
+        "true": .true,
+        "var": .var,
+        "while": .while
+    ]
+
     init(source: String) {
         self.source = source
         sourceCount = source.count
@@ -66,6 +85,8 @@ final class Scanner {
         default:
             if Int(value) != nil {
                 number()
+            } else if isAlphabet(c: Character(value)) {
+                identifier()
             } else {
                 Lox.error(line: line, message: "Unexpected character.")
                 return
@@ -73,6 +94,11 @@ final class Scanner {
         }
     }
 
+    private func isAlphabet(c: Character) -> Bool {
+       (c >= "a" && c <= "z") || (c >= "A" && c <= "Z") || c == "_"
+    }
+
+    // TODO: current + 1する前に先読みできるかを判断する
     @discardableResult
     private func advance() -> String? {
         let index = source.index(source.startIndex, offsetBy: current)
@@ -162,5 +188,24 @@ extension Scanner {
 
         let value = source.substring(from: start, to: current)
         addToken(type: .number, literal: .number(value: Double(value)!))
+    }
+
+    private func identifier() {
+        let next = peek()
+        while isAlphabet(c: Character(next)) || Int(next) != nil {
+            if isAtEnd {
+                break
+            }
+
+            advance()
+        }
+
+        let text = source.substring(from: start, to: current)
+        let type = keywords[text]
+        if let type {
+            addToken(type: type)
+        } else {
+            addToken(type: .identifier)
+        }
     }
 }
