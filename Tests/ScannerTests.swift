@@ -55,38 +55,36 @@ final class ScannerTests: XCTestCase {
     }
 
     func testScanIdentifier() throws {
-        XCTContext.runActivity(named: "scan identifier") { _ in
-            let scanner = Scanner(source: "hoge")
-            let tokens = scanner.scanTokens()
-            XCTAssertEqual(tokens.count, 2)
-            XCTAssertEqual(tokens[0].type, .identifier)
-            XCTAssertEqual(tokens[0].lexeme, "hoge")
-            XCTAssertNil(tokens[0].literal)
+        let scanner = Scanner(source: "hoge")
+        let tokens = scanner.scanTokens()
+        XCTAssertEqual(tokens.count, 2)
+        XCTAssertEqual(tokens[0].type, .identifier)
+        XCTAssertEqual(tokens[0].lexeme, "hoge")
+        XCTAssertNil(tokens[0].literal)
 
-            XCTAssertEqual(tokens[1].type, .eof)
-        }
+        XCTAssertEqual(tokens[1].type, .eof)
+    }
 
-        XCTContext.runActivity(named: "scan identifier similar keywords") { _ in
-            let scanner = Scanner(source: "andd")
-            let tokens = scanner.scanTokens()
-            XCTAssertEqual(tokens.count, 2)
-            XCTAssertEqual(tokens[0].type, .identifier)
-            XCTAssertEqual(tokens[0].lexeme, "andd")
-            XCTAssertNil(tokens[0].literal)
+    func testScanIdentifierSimilarKeywords() throws {
+        let scanner = Scanner(source: "andd")
+        let tokens = scanner.scanTokens()
+        XCTAssertEqual(tokens.count, 2)
+        XCTAssertEqual(tokens[0].type, .identifier)
+        XCTAssertEqual(tokens[0].lexeme, "andd")
+        XCTAssertNil(tokens[0].literal)
 
-            XCTAssertEqual(tokens[1].type, .eof)
-        }
+        XCTAssertEqual(tokens[1].type, .eof)
+    }
 
-        XCTContext.runActivity(named: "scan identifier similar keywords") { _ in
-            let scanner = Scanner(source: "aand")
-            let tokens = scanner.scanTokens()
-            XCTAssertEqual(tokens.count, 2)
-            XCTAssertEqual(tokens[0].type, .identifier)
-            XCTAssertEqual(tokens[0].lexeme, "aand")
-            XCTAssertNil(tokens[0].literal)
+    func testScanIdentifierSimilarKeywords2() throws {
+        let scanner = Scanner(source: "aand")
+        let tokens = scanner.scanTokens()
+        XCTAssertEqual(tokens.count, 2)
+        XCTAssertEqual(tokens[0].type, .identifier)
+        XCTAssertEqual(tokens[0].lexeme, "aand")
+        XCTAssertNil(tokens[0].literal)
 
-            XCTAssertEqual(tokens[1].type, .eof)
-        }
+        XCTAssertEqual(tokens[1].type, .eof)
     }
 
     func testScanKeyword() throws {
