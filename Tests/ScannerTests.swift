@@ -1,5 +1,5 @@
 import XCTest
-@testable import Slox
+@testable import Lox
 
 final class ScannerTests: XCTestCase {
     struct TestCase {
