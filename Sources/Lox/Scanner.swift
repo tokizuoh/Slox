@@ -147,7 +147,7 @@ extension Scanner {
         addToken(type: type, literal: nil)
     }
 
-    private func addToken(type: TokenType, literal: Literal?) {
+    private func addToken(type: TokenType, literal: LiteralType?) {
         let text = source.substring(from: start, to: current)
         tokens.append(
             Token(type: type, lexeme: text, literal: literal, line: line)

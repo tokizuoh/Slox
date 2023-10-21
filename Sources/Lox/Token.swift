@@ -1,13 +1,13 @@
 final class Token {
     let type: TokenType
     let lexeme: String
-    let literal: Literal?
+    let literal: LiteralType?
     let line: Int
 
     init(
         type: TokenType,
         lexeme: String,
-        literal: Literal?,
+        literal: LiteralType?,
         line: Int
     ) {
         self.type = type
