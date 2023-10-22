@@ -22,7 +22,6 @@ struct ASTPrinter: Visitor {
 
     private func paranthesize(name: String, expressions: Expression...) -> String {
         var result = ""
-
         result += "("
         result += "\(name)"
         expressions.forEach { e in

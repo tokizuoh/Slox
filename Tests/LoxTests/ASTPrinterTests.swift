@@ -39,5 +39,4 @@ final class ASTPrinterTests: XCTestCase {
         let expected = "(* (- 123.0) (group 45.67))"
         XCTAssertEqual(actual, expected)
     }
-
 }
