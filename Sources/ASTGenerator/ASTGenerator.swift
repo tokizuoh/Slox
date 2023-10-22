@@ -46,8 +46,7 @@ struct ASTGenerator {
         let path = "\(outputDirectory)/\(baseName).swift"
         let contentsString = "protocol \(baseName) {}"
 
-        let contents = contentsString.data(using: .utf8)
-        FileManager.default.createFile(atPath: path, contents: contents)
+        createFile(atPath: path, contentsString: contentsString)
     }
 
     private static func defineType(outputDirectory: String, baseName: String, typeName: String, fields: [String]) {
@@ -61,7 +60,12 @@ struct ASTGenerator {
         }
         contentsString += "}\n"
 
-        let contents = contentsString.data(using: .utf8)
+        createFile(atPath: path, contentsString: contentsString)
+    }
+
+    private static func createFile(atPath path: String, contentsString: String) {
+        let header = "// this file generated \n\n"
+        let contents = (header + contentsString).data(using: .utf8)
         FileManager.default.createFile(atPath: path, contents: contents)
     }
 }
