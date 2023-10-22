@@ -10,3 +10,4 @@ DerivedData/
 *.txt
 main
 ast-generator
+Sources/Lox/generated/
