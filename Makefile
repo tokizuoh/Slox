@@ -2,11 +2,11 @@ swiftlint:
 	swiftlint --fix --quiet
 
 run: swiftlint
-	swiftc -parse-as-library -o main Sources/Lox/*.swift
+	swiftc -parse-as-library -o main Sources/Lox/*.swift Sources/Lox/**/*.swift
 	./main
 
 run-with-args: swiftlint
-	swiftc -parse-as-library -o main Sources/Lox/*.swift
+	swiftc -parse-as-library -o main Sources/Lox/*.swift Sources/Lox/**/*.swift
 	./main "${ARG}"
 
 run-ast-generator: swiftlint
