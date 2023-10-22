@@ -26,7 +26,6 @@ struct ASTGenerator {
     private static func defineAST(outputDirectory: String, baseName: String, types: [String]) {
         defineBase(outputDirectory: outputDirectory, baseName: baseName)
 
-        var contentsString = ""
         types.forEach { t in
             let substrings = t.components(separatedBy: ":")
 
