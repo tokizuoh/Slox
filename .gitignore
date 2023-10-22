@@ -8,5 +8,5 @@ DerivedData/
 .netrc
 
 *.txt
-lox
+main
 ast-generator
