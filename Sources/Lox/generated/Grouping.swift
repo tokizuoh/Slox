@@ -1,4 +1,4 @@
-// this file generated 
+// auto-generated
 
 struct Grouping: Expression {
     let expression: Expression

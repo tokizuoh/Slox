@@ -1,4 +1,4 @@
-// this file generated 
+// auto-generated
 
 protocol Visitor {
     associatedtype E

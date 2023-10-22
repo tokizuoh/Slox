@@ -1,4 +1,4 @@
-// this file generated 
+// auto-generated
 
 struct Binary: Expression {
     let left: Expression

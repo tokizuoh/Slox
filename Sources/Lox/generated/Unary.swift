@@ -1,4 +1,4 @@
-// this file generated 
+// auto-generated
 
 struct Unary: Expression {
     let `operator`: Token

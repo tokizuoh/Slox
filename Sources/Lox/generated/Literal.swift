@@ -1,4 +1,4 @@
-// this file generated 
+// auto-generated
 
 struct Literal: Expression {
     let literal: LiteralType

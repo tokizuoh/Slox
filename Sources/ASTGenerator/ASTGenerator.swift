@@ -89,7 +89,7 @@ struct ASTGenerator {
     }
 
     private static func createFile(atPath path: String, contentsString: String) {
-        let header = "// this file generated \n\n"
+        let header = "// auto-generated\n\n"
         let contents = (header + contentsString).data(using: .utf8)
         FileManager.default.createFile(atPath: path, contents: contents)
     }
