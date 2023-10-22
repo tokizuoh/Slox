@@ -15,10 +15,10 @@ struct ASTGenerator {
             outputDirectory: outputDirectory,
             baseName: "Expression",
             types: [
-                "Binary: Expression left, TokenType `operator`, Expression right",
+                "Binary: Expression left, Token `operator`, Expression right",
                 "Grouping: Expression expression",
                 "Literal: LiteralType literal",
-                "Unary: TokenType `operator`, Expression right"
+                "Unary: Token `operator`, Expression right"
             ]
         )
     }
@@ -45,7 +45,11 @@ struct ASTGenerator {
 
     private static func defineBase(outputDirectory: String, baseName: String) {
         let path = "\(outputDirectory)/\(baseName).swift"
-        let contentsString = "protocol \(baseName) {}\n"
+        var contentsString = ""
+
+        contentsString += "protocol \(baseName) {\n"
+        contentsString += "    func accept<V: Visitor>(visitor: V) -> V.E\n"
+        contentsString += "}\n"
 
         createFile(atPath: path, contentsString: contentsString)
     }
@@ -55,10 +59,11 @@ struct ASTGenerator {
         var contentsString = ""
 
         contentsString +=  "protocol Visitor {\n"
+        contentsString +=  "    associatedtype E\n"
         types.forEach { t in
             let components = t.components(separatedBy: ":")
             let typeName = components[0]
-            contentsString += "    func visit\(typeName)\(baseName)(\(baseName.lowercased()): \(typeName)) -> \(baseName)\n"
+            contentsString += "    func visit\(typeName)\(baseName)(_ \(baseName.lowercased()): \(typeName)) -> E\n"
         }
         contentsString += "}\n"
 
@@ -74,6 +79,10 @@ struct ASTGenerator {
             let components = field.components(separatedBy: " ")
             contentsString += "    let \(components[1]): \(components[0])\n"
         }
+        contentsString += "\n"
+        contentsString += "    func accept<V: Visitor>(visitor: V) -> V.E {\n"
+        contentsString += "        visitor.visit\(typeName)\(baseName)(self)\n"
+        contentsString += "    }\n"
         contentsString += "}\n"
 
         createFile(atPath: path, contentsString: contentsString)
