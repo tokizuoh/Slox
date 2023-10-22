@@ -27,10 +27,10 @@ struct ASTGenerator {
         defineBase(outputDirectory: outputDirectory, baseName: baseName)
 
         types.forEach { t in
-            let substrings = t.components(separatedBy: ":")
+            let components = t.components(separatedBy: ":")
 
-            let typeName = substrings[0]
-            let fields = substrings[1].components(separatedBy: ",").map { s in
+            let typeName = components[0]
+            let fields = components[1].components(separatedBy: ",").map { s in
                 s.trimmingCharacters(in: .whitespaces)
             }
             defineType(
