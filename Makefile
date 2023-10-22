@@ -11,7 +11,7 @@ run-with-args: swiftlint
 
 run-ast-generator: swiftlint
 	swiftc -parse-as-library -o ast-generator Sources/ASTGenerator/*.swift
-	./ast-generator "${ARG}"
+	./ast-generator
 
 test: swiftlint
 	swift test

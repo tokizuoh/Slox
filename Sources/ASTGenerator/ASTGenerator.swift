@@ -3,8 +3,8 @@ struct ASTGenerator {
     static func main() {
         let arguments = CommandLine.arguments
 
-        guard arguments.count == 2 else {
-            print("Usage: ASTGenerator <output directory>")
+        guard arguments.count == 1 else {
+            print("Usage: ASTGenerator")
             exit(64)
         }
 
