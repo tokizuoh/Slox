@@ -25,6 +25,7 @@ struct ASTGenerator {
 
     private static func defineAST(outputDirectory: String, baseName: String, types: [String]) {
         defineBase(outputDirectory: outputDirectory, baseName: baseName)
+        defineVisitor(outputDirectory: outputDirectory, baseName: baseName, types: types)
 
         types.forEach { t in
             let components = t.components(separatedBy: ":")
@@ -44,7 +45,22 @@ struct ASTGenerator {
 
     private static func defineBase(outputDirectory: String, baseName: String) {
         let path = "\(outputDirectory)/\(baseName).swift"
-        let contentsString = "protocol \(baseName) {}"
+        let contentsString = "protocol \(baseName) {}\n"
+
+        createFile(atPath: path, contentsString: contentsString)
+    }
+
+    private static func defineVisitor(outputDirectory: String, baseName: String, types: [String]) {
+        let path = "\(outputDirectory)/Visitor.swift"
+        var contentsString = ""
+
+        contentsString +=  "protocol Visitor {\n"
+        types.forEach { t in
+            let components = t.components(separatedBy: ":")
+            let typeName = components[0]
+            contentsString += "    func visit\(typeName)\(baseName)(\(baseName.lowercased()): \(typeName)) -> \(baseName)\n"
+        }
+        contentsString += "}\n"
 
         createFile(atPath: path, contentsString: contentsString)
     }
